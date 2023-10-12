@@ -1,0 +1,68 @@
+spring:
+  thymeleaf:
+    prefix: classpath:/templates/
+  resources:
+    static-locations: classpath:/static/public
+  security:
+    cookie-props:
+      max-age-in-minutes: 7200
+      http-only: true
+      secure: true
+      domain: ${DOMAIN}
+      path: /
+    allow-credentials: true
+    allowed-origins:
+      - https://${DOMAIN}
+      - http://localhost:3000
+    allowed-methods:
+      - GET
+      - POST
+      - PUT
+      - PATCH
+      - DELETE
+      - OPTIONS
+    allowed-headers:
+      - Authorization
+      - Origin
+      - Content-Type
+      - Accept
+      - Accept-Encoding
+      - Accept-Language
+      - Access-Control-Allow-Origin
+      - Access-Control-Allow-Headers
+      - Access-Control-Request-Method
+      - X-Requested-With
+      - X-Auth-Token
+      - X-Xsrf-Token
+      - Cache-Control
+      - Id-Token
+    allowed-public-apis:
+      - /css/**
+      - /js/**
+      - /img/**
+      - /
+      - /form/**
+    exposed-headers:
+      - X-Xsrf-Token
+    oauth2:
+      client:
+        registration:
+          google:
+            registrationId: google
+
+            # TODO
+            client-id: { client-id for google oauth2 }
+            client-secret: { client-secret for google oauth2 }
+
+            client-authentication-method: basic
+            authorization-grant-type: authorization_code
+            redirect-uri-template: "{baseUrl}/login/oauth2/code/{registrationId}"
+            scope: openid, profile, email, address, phone
+            client-name: Google Login
+        provider:
+          google:
+            authorization-uri: https://accounts.google.com/o/oauth2/v2/auth
+            token-uri: https://www.googleapis.com/oauth2/v4/token
+            user-info-uri: https://www.googleapis.com/oauth2/v3/userinfo
+            jwk-set-uri: https://www.googleapis.com/oauth2/v3/certs
+            user-name-attribute: sub
