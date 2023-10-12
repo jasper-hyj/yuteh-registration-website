@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html th:lang="${#locale}">
+
+<head>
+    <th:block th:replace="share/head :: meta"></th:block>
+    <title th:utext="#{index.head.label}">登記入學</title>
+    <th:block th:replace="share/head :: css"></th:block>
+    <th:block th:replace="share/head :: icon"></th:block>
+    <th:block th:replace="admin/share :: style"></th:block>
+</head>
+
+<body>
+    <main>
+        <th:block th:replace="admin/share :: symbol_list"></th:block>
+        <th:block th:replace="admin/share :: sidebar"></th:block>
+        <div class="container-fluid my-3" style="overflow: auto">
+            <div>
+                <form id="sqlForm" class="row g-3">
+                    <div class="col-md-12">
+                        <textarea name=" sqlString" id="sqlString" class="form-control form-control-sm mb-2" type="text"
+                            placeholder="sql" rows="5" cols="500" required></textarea>
+                    </div>
+                    <div class="col-md-2">
+                        <select class="form-select" id="typeSelect" name="type">
+                            <option value="query">Query</option>
+                            <option value="update">Update</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div>
+                <table class="table table-sm table-striped" style="font-size: 8px;">
+                    <thead>
+                        <tr id="columnNameList">
+                        </tr>
+                    </thead>
+                    <tbody id="columnList">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+    <th:block th:replace="admin/share :: style"></th:block>
+    <script src="/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/admin.min.js"></script>
+</body>
+
+</html>

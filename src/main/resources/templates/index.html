@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html th:lang="${#locale}">
+
+<head>
+    <th:block th:replace="share/head :: meta"></th:block>
+    <title th:utext="#{index.head.label}">登記入學</title>
+    <th:block th:replace="share/head :: css"></th:block>
+    <th:block th:replace="share/head :: icon"></th:block>
+</head>
+
+<body class="l-body-fit">
+    <th:block th:replace="share/body :: nav"></th:block>
+    <main class="l-body-fit__body l-fx l-fx--x_c">
+        <div class="l-body-fit__body l-fx l-fx--x_c c-index-background-image_img">
+            <div class="l-body-fit__body l-fx l-fx--x_c c-index-background-image_cover">
+                <div class="l-index-form-group">
+                    <div class="l-content_w_n-pc l-content_p_l-tb l-content_p_l-sp">
+                        <h1 class="c-txt-size_l5" style="text-align:center" :if="${status}" th:text="${status}"></h1>
+                        <div th:unless="${status}"
+                            class="l-grid l-grid--1-tb l-grid--gap-y_l4-pc l-grid--gap-x_l7-tb l-grid--gap-x_l7-pc l-grid--gap-y_l2-tb l-grid--gap-y_l4-sp l-grid--gap-x_l4-sp l-grid--2-pc l-grid--1-sp">
+                            <th:block th:each="form : ${formList}">
+                                <a class="c-index-form__link" th:href="@{/form(id=${form.id})}">
+                                    <div class="c-index-form">
+                                        <div class="c-index-form__title">
+                                            <h5 class="" th:text="${form.indexHeading}"></h5>
+                                        </div>
+                                        <div class="c-index-form-content">
+                                            <p class="c-index-form-content__opentime" th:text="#{index.opentime}"></p>
+                                            <p class="c-index-form-content__start"
+                                                th:text="${#dates.format(new java.util.Date(form.startTime), 'yyyy-MM-dd HH:mm')}">
+                                            </p>
+                                            <p class="c-index-form-content__to">~</p>
+                                            <p class="c-index-form-content__end"
+                                                th:text="${#dates.format(new java.util.Date(form.endTime), 'yyyy-MM-dd HH:mm')}">
+                                            </p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </th:block>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <th:block th:replace="share/body :: footer"></th:block>
+</body>
+
+</html>

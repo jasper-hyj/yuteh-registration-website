@@ -1,0 +1,22 @@
+<body>
+    <th:block th:fragment="loading">
+        <div style="z-index: 1000;" id="form_loading"
+            class="d-none spinner bg-white w-100 h-100 d-flex justify-content-center align-items-center position-absolute top-50 start-50 translate-middle">
+            <h5 class="me-3 c-txt-size_l3" th:text="#{form.loading}">Loading...</h5>
+            <div class="spinner-border text-warning" style="width: 3rem; height: 3rem;" role="status"></div>
+        </div>
+    </th:block>
+
+    <th:block th:fragment="status">
+        <main class="l-body-fit__body l-fx l-fx--x_c">
+            <div class="c-form-status" th:if="${status}">
+                <h3 class="c-txt-size_l5" th:text="#{form.notopen}">
+                </h3>
+                <h5 class="c-txt-size_l2"
+                    th:text="|#{index.opentime}: ${#dates.format(new java.util.Date(status.startTime), 'yyyy-MM-dd HH:mm')} ~ ${#dates.format(new java.util.Date(status.endTime), 'yyyy-MM-dd HH:mm')}|">
+                </h5>
+                <a class="btn btn-warning mt-2" href="/" th:utext="#{error.link.label}"></a>
+            </div>
+        </main>
+    </th:block>
+</body>

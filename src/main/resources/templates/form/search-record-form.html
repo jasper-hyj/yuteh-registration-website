@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html th:lang="${#locale}">
+
+<head>
+    <th:block th:replace="share/head :: meta"></th:block>
+    <title th:utext="#{search.head.label}">登記入學</title>
+    <th:block th:replace="share/head :: css"></th:block>
+    <th:block th:replace="share/head :: icon"></th:block>
+</head>
+
+<body class="l-body-fit">
+    <th:block th:replace="share/body :: nav"></th:block>
+    <main class="container my-5">
+        <form id="search_form" style="max-width: 400px;margin: 0 auto;">
+            <fieldset id="search_fieldset">
+                <div class="row g-3">
+                    <div class="col-12">
+                        <label class="form-label" th:text="#{search.form.studentbirthdate}">學生生日 Student's Birth
+                            Date(必填)</label>
+                        <input type="date" name="student_birth_date" class="form-control" min="2000-01-01"
+                            max="2050-12-31" placeholder=" 學生生日 (Student's Birth Date)" required
+                            th:attr="autofocus=autofocus">
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label" th:text="#{search.form.identity}">身份證字號 Identity(必填)</label>
+                        <input type="password" name="student_id" class="form-control" maxlength="10"
+                            th:placeholder="#{search.form.identity.placeholder}" required>
+                    </div>
+                    <div class="col-12">
+                        <button type="submit" id="search_button" class="btn btn-warning"
+                            th:text="#{search.form.searchsubmitbtn}">查詢</button>
+                        <!-- <button type="button" id="edit_button" class="btn btn-warning"
+                            th:text="#{search.form.editsubmitbtn}">更改資料</button> -->
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+        <div class="container invisible" id="result_container">
+            <div style="display: grid;grid-template-columns: 80% 20%;">
+                <h3>
+                    <span class="c-txt-size_l5" id="form_name"></span>
+                </h3>
+<!--                <a class="btn btn-warning ms-2" style="height: max-content;" href="/form/edit"-->
+<!--                    th:text="#{search.form.editsubmitbtn}">編輯表單 Edit Form</a>-->
+            </div>
+            <div id="result_content">
+            </div>
+        </div>
+    </main>
+    <th:block th:replace="share/body :: footer"></th:block>
+    <script src="/js/script.min.js"></script>
+</body>
+
+</html>

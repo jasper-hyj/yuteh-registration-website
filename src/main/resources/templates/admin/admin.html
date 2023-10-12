@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html th:lang="${#locale}">
+
+<head>
+    <th:block th:replace="share/head :: meta"></th:block>
+    <title th:utext="#{index.head.label}">登記入學</title>
+    <th:block th:replace="share/head :: css"></th:block>
+    <th:block th:replace="share/head :: icon"></th:block>
+    <th:block th:replace="admin/share :: style"></th:block>
+</head>
+
+<body>
+    <main>
+        <th:block th:replace="admin/share :: symbol_list"></th:block>
+        <th:block th:replace="admin/share :: sidebar"></th:block>
+        <div class="container-fluid my-3 d-flex flex-wrap" style="overflow: auto;">
+            <div class="container-fluid my-3 col-md-5" style="overflow: auto;">
+                <h1 class="c-txt-size_l4 text-center mb-2">開放中表單</h1>
+                <th:block th:each="form : ${publicFormList}">
+                    <div class="mb-3 col p-4 d-flex text-center flex-column position-static bg-light rounded">
+                        <strong class="d-inline-block mb-2" style="color: var(--root-color_main);" th:text="${form.name}">World</strong>
+                        <h3 class="mb-0 " th:text="|${form.startTime} ~ ${form.endTime}|">Featured post</h3>
+                        <a th:href="@{/form(id=${form.id})}" class="">表單連結</a>
+                    </div>
+                </th:block>
+            </div>
+            <div class="container-fluid my-3 col-md-5" style="overflow: auto;">
+                <h5 class="c-txt-size_l3 c-txt-size_l4 text-center mb-2">使用者</h5>
+                <p class="c-txt-size_l2 text-center" th:text="|Email: ${user.email}|"></p>
+                <p class="c-txt-size_l2 text-center" th:text="|名字: ${user.name}|"></p>
+                <p class="c-txt-size_l2 text-center" th:text="|類型: ${user.role}|"></p>
+            </div>
+        </div>
+    </main>
+
+    <script src="/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/admin.min.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html th:lang="${#locale}">
+
+<head>
+    <th:block th:replace="share/head :: meta"></th:block>
+    <title th:utext="#{index.head.label}">登記入學</title>
+    <th:block th:replace="share/head :: css"></th:block>
+    <th:block th:replace="share/head :: icon"></th:block>
+    <th:block th:replace="admin/share :: style"></th:block>
+</head>
+
+<body>
+    <main>
+        <th:block th:replace="admin/share :: symbol_list"></th:block>
+        <th:block th:replace="admin/share :: sidebar"></th:block>
+        <div class="container my-3" style="overflow: auto;">
+            <form id="view_form_form" style="margin: auto;width: max-content;"
+                class="row row-cols-lg-auto g-3 align-items-center mb-4">
+                <div class="col-8">
+                    <div class="input-group">
+                        <label class="input-group-text" for="form_select">表單選擇</label>
+                        <select class="form-select" id="form_select" onchange="getForm()">
+                            <option>選擇表單...</option>
+                            <th:block th:each="form : ${formList}">
+                                <option th:value="${form.id}" th:text="${form.name}">One</option>
+                            </th:block>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="input-group">
+                        <a type="submit" id="form_link" href="#" class="btn btn-warning">檢視</a>
+                    </div>
+                </div>
+            </form>
+            <form id="reset_form_session" style="margin: auto;width: max-content;">
+                <button type="submit" class="btn btn-warning">更新表單快取</button>
+            </form>
+            <script>
+                const resetFormSession = document.getElementById("reset_form_session");
+                resetFormSession.addEventListener("submit", function (event) {
+                    event.preventDefault();
+                    const XHR = new XMLHttpRequest();
+                    XHR.addEventListener("load", function (event) {
+                        alert("Success")
+                    })
+                    XHR.addEventListener("error", function (event) {
+                        alert(event.target.responseText);
+                        console.log("ERROR : ", event.target.responseText);
+                        sqlString.readOnly = false;
+                        alert(event.target.responseText.responseJSON.columnNameList[0]);
+                    });
+                    XHR.open("POST", "/admin/form/reset");
+                    XHR.send();
+                })
+
+            </script>
+        </div>
+    </main>
+
+    <script src="/js/admin.min.js"></script>
+</body>
+
+</html>

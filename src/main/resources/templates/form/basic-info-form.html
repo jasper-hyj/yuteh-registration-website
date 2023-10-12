@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html th:lang="${#locale}">
+
+<head>
+    <th:block th:replace="share/head :: meta" />
+    <title th:utext="#{index.head.label}">登記</title>
+    <th:block th:replace="share/head :: css" />
+    <th:block th:replace="share/head :: icon" />
+</head>
+
+<body class="l-body-fit">
+    <th:block th:replace="share/body :: nav"></th:block>
+    <main class="l-body-fit__body">
+        <div class="l-content_w_n-pc l-content_p_l-tb l-content_p_l-sp">
+            <div class="c-form" th:if="${form}" id="form_container">
+                <h1 class="c-form__title c-txt-size_l5" th:text="${form.name}">Elementary Form</h1>
+                <p class="c-form__info" style="line-height: 2rem;" th:utext="${form.information}"></p>
+                <!-- <p>
+                    <span style="color: var(--root-color_red-light);">*</span>
+                    <span th:text="#{form.required.label}"></span>
+                </p> -->
+                <form class="" id="basic_form">
+                    <fieldset id="basic_form_fieldset">
+                        <input class="d-none" type="text" name="form_id" id="idform_id" th:value="${form.id}">
+                        <div class="row g-3">
+                            <!-- <div class="col-12">
+                                <label class="form-label" th:text="#{form.basic.studentbirthdate}">學生生日 Student's Birth
+                                    Date(必填)</label>
+                                <input type="date" name="student_birth_date" class="form-control" min="2000-01-01"
+                                    max="2050-12-31" placeholder=" 學生生日 (Student's Birth Date)" required
+                                    th:attr="autofocus=autofocus">
+                            </div> -->
+                            <div class="col-12">
+                                <label class="form-label" th:text="#{form.basic.identity}">身份證字號 Identity(必填)</label>
+                                <input type="text" name="student_id" class="form-control" maxlength="10"
+                                    th:placeholder="#{form.basic.identity.placeholder}" required>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label" th:text="#{form.basic.email}">電子信箱 Email Address(必填)</label>
+                                <input type="email" name="student_email" class="form-control" required>
+                            </div>
+                            <div class="c-form-button">
+                                <button type="submit" class="c-form-button__submit btn btn-warning"
+                                    th:text="#{form.basic.submit}">下一步</button>
+
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+        <th:block th:replace="form/share :: loading"></th:block>
+    </main>
+    <th:block th:replace="form/share :: status"></th:block>
+    <th:block th:replace="share/body :: footer"></th:block>
+    <script src="/js/script.min.js"></script>
+</body>
+
+</html>

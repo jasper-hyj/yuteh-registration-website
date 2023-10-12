@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html th:lang="${#locale}">
+
+<head>
+    <th:block th:replace="share/head :: meta"></th:block>
+    <title th:utext="#{index.head.label}">登記入學</title>
+    <th:block th:replace="share/head :: css"></th:block>
+    <th:block th:replace="share/head :: icon"></th:block>
+    <th:block th:replace="admin/share :: style"></th:block>
+</head>
+
+<body>
+    <main>
+        <th:block th:replace="admin/share :: symbol_list"></th:block>
+        <th:block th:replace="admin/share :: sidebar"></th:block>
+        <div class="container-fluid my-3" style="overflow: auto;">
+            <div class="container-fluid my-3" style="overflow: auto;display:flex">
+                <th:block th:each="form : ${formList}">
+                    <a class="c-index-form__link" th:href="@{/admin/test/form(id=${form.id})}">
+                        <div class="c-index-form">
+                            <div class="c-index-form__title">
+                                <h5 class="" th:text="${form.indexHeading}"></h5>
+                            </div>
+                            <div class="c-index-form-content">
+                                <p class="c-index-form-content__opentime" th:text="#{index.opentime}"></p>
+                                <p class="c-index-form-content__start"
+                                    th:text="${#dates.format(new java.util.Date(form.startTime), 'yyyy-MM-dd HH:mm')}">
+                                </p>
+                                <p class="c-index-form-content__to">~</p>
+                                <p class="c-index-form-content__end"
+                                    th:text="${#dates.format(new java.util.Date(form.endTime), 'yyyy-MM-dd HH:mm')}">
+                                </p>
+                            </div>
+                        </div>
+                    </a>
+                </th:block>
+            </div>
+        </div>
+    </main>
+
+    <script src="/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/admin.min.js"></script>
+</body>
+
+</html>

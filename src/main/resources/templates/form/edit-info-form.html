@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html th:lang="${#locale}">
+
+<head>
+    <th:block th:replace="share/head :: meta" />
+    <title th:utext="#{index.head.label}">登記</title>
+    <th:block th:replace="share/head :: css" />
+    <th:block th:replace="share/head :: icon" />
+</head>
+
+<body class="l-body-fit">
+    <script th:if="${searchRD}" th:inline="javascript">
+        /*<![CDATA[*/
+        var message = /*[[${searchRD}]]*/ '/';
+        window.location = message;
+        /*]]>*/
+    </script>
+    <!-- <th:block th:replace="share/body :: nav"></th:block> -->
+    <main class="l-body-fit__body">
+        <div class="l-content_w_n-pc l-content_p_l-tb l-content_p_l-sp">
+            <div class="c-form" th:if="${form}" id="form_container">
+                <h1 class="c-form__title c-txt-size_l5" th:text="${form.name}">Elementary Form</h1>
+                <p class="c-form__info" style="line-height: 2rem;" th:utext="${form.information}"></p>
+                <p>
+                    <span style="color: var(--root-color_red-light);">*</span>
+                    <span th:text="#{form.required.label}"></span>
+                </p>
+                <form class="" id="form">
+                    <fieldset id="form_fieldset">
+                        <input class="d-none" type="text" name="form_id" id="idform_id" th:value="${form.id}">
+                        <div class="c-form-section" th:each="section : ${form.sectionList}">
+                            <h4 th:text="${section.name}" class="l-form-section__title c-txt-size_l3 text-capitalize">
+                            </h4>
+                            <p th:utext="${section.content}" class="l-form-section__content"></p>
+
+                            <div class="row g-3">
+                                <th:block th:each="column : ${section.columnList}">
+                                    <div th:classappend="|col-md-${column.size}|">
+                                        <th:block th:switch="${column.type}">
+                                            <label th:for="|id${column.id}|" class="form-label">
+                                                <span th:text="${column.name}"></span>
+                                                <span style="color: red;"
+                                                    th:text="(${column.required} ? '*' : '')"></span>
+                                            </label>
+
+                                            <th:block th:case="input_text">
+                                                <input type="text" th:name="${column.id}" class="form-control"
+                                                    th:id="|id${column.id}|" th:placeholder="|${column.placeholder}|"
+                                                    th:required="${column.required} ? 'required' : null"
+                                                    th:value="${#maps.containsKey(formData, column.id)} ? ${formData.get(column.id)}"
+                                                    th:maxlength="${column.restrict}">
+                                            </th:block>
+
+                                            <th:block th:case="input_radio">
+                                                <div>
+                                                    <div class="form-check form-check-inline"
+                                                        th:if="${column.optionList}"
+                                                        th:each="option : ${column.optionList}">
+                                                        <input th:value="${option.id}" th:name="${column.id}"
+                                                            th:id="${option.id}" class="form-check-input" type="radio"
+                                                            th:required="${column.required} ? 'required' : null"
+                                                            th:checked="(${#maps.containsKey(formData, column.id)} ? true : false) ? (${#lists.contains(formData.get(column.id), option.id)} ? 'checked')">
+                                                        <label class="form-check-label" th:text="${option.name}"
+                                                            th:for="${option.id}">
+                                                        </label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline" style="width: 100%;"
+                                                        th:if=${column.other}>
+                                                        <input th:value="|${column.id}_O99|" th:name="|${column.id}|"
+                                                            th:id="|id${column.id}_O99|" class="form-check-input"
+                                                            type="radio"
+                                                            th:required="${column.required} ? 'required' : null"
+                                                            th:checked="(${#maps.containsKey(formData, column.id)} ? true : false) ? (${#lists.contains(formData.get(column.id), column.id + '_O99')} ? 'checked')">
+                                                        <label style="display: flex;" class="form-check-label"
+                                                            th:for="|id${column.id}_O99|">
+                                                            <span class="me-3" th:text="#{form.other}"
+                                                                style="min-width: fit-content;">Other</span>
+                                                            <input type="text" class="form-control"
+                                                                th:name="${column.id}" th:id="|id${column.id}_O99_text|"
+                                                                th:value="(${#maps.containsKey(formData, column.id)} ? true : false) ? (${#lists.contains(formData.get(column.id), column.id + '_O99')} ? ${formData.get(column.id)[#lists.size(formData.get(column.id)) - 1]})">
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </th:block>
+
+                                            <th:block th:case="input_date">
+                                                <input th:name="${column.id}" type="date"
+                                                    th:min="${#strings.arraySplit(column.restrict, '~')[0]}"
+                                                    th:max="${#strings.arraySplit(column.restrict, '~')[1]}"
+                                                    class="form-control" th:id="|id${column.id}|"
+                                                    pattern="\d{4}-\d{2}-\d{2}"
+                                                    th:required="${column.required} ? 'required' : null"
+                                                    th:value="${#maps.containsKey(formData, column.id)} ? ${formData.get(column.id)}">
+                                            </th:block>
+
+                                            <th:block th:case="input_checkbox">
+                                                <div>
+                                                    <div class="form-check form-check-inline"
+                                                        th:each="option : ${column.optionList}">
+                                                        <input class="form-check-input" type="checkbox"
+                                                            th:id="|id${option.id}|" th:value="${option.id}"
+                                                            th:name="${column.id}"
+                                                            th:checked="(${#maps.containsKey(formData, column.id)} ? true : false) ? (${#lists.contains(formData.get(column.id), option.id)} ? 'checked')">
+                                                        <label class="form-check-label" th:for="|id${option.id}|"
+                                                            th:text="${option.name}">
+                                                            Default checkbox
+                                                        </label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline" th:if=${column.other}
+                                                        style="width: 100%;">
+                                                        <input th:value="|${column.id}_O99|" th:name="|${column.id}|"
+                                                            th:id="|id${column.id}_O99|" class="form-check-input"
+                                                            th:checked="(${#maps.containsKey(formData, column.id)} ? true : false) ? (${#lists.contains(formData.get(column.id), column.id + '_O99')} ? 'checked')"
+                                                            type="checkbox">
+                                                        <label style="display: flex;" class="form-check-label"
+                                                            th:for="|id${column.id}_O99|">
+                                                            <span class="me-3" th:text="#{form.other}"
+                                                                style="min-width: fit-content;">Other</span>
+                                                            <input type="text" class="form-control"
+                                                                th:name="${column.id}" th:id="|id${column.id}_O99_text|"
+                                                                th:value="(${#maps.containsKey(formData, column.id)} ? true : false) ? (${#lists.contains(formData.get(column.id), column.id + '_O99')} ? ${formData.get(column.id)[#lists.size(formData.get(column.id)) - 1]})">
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </th:block>
+
+                                            <th:block th:case="input_tel">
+                                                <input type="tel" th:name="${column.id}" class="form-control"
+                                                    th:id="|id${column.id}|" th:placeholder="|${column.placeholder}|"
+                                                    th:required="${column.required} ? 'required' : null"
+                                                    th:value="${#maps.containsKey(formData, column.id)} ? ${formData.get(column.id)}">
+                                            </th:block>
+                                            <th:block th:case="input_email">
+                                                <input type="email" th:name="${column.id}" class="form-control"
+                                                    th:id="|id${column.id}|" th:placeholder="|${column.placeholder}|"
+                                                    th:required="${column.required} ? 'required' : null"
+                                                    th:value="${#maps.containsKey(formData, column.id)} ? ${formData.get(column.id)}">
+                                            </th:block>
+                                            <th:block th:case="select-option">
+                                                <select th:id="|id${column.id}|" class="form-select"
+                                                    th:name="${column.id}"
+                                                    th:required="${column.required} ? 'required' : null">
+                                                    <option th:each="option : ${column.optionList}"
+                                                        th:text="${option.name}" th:value="${option.id}"
+                                                        th:selected="(${#maps.containsKey(formData, column.id)} ? true : false) ? (${#lists.contains(formData.get(column.id), option.id)} ? 'selected')">
+                                                    </option>
+                                                </select>
+                                            </th:block>
+                                            <th:block th:case="input_checkbox_single">
+                                                <div>
+                                                    <div class="form-check form-check-inline"
+                                                        th:each="option : ${column.optionList}">
+                                                        <input class="form-check-input" type="checkbox"
+                                                            th:id="|id${option.id}|" th:value="${option.id}"
+                                                            th:name="${column.id}"
+                                                            th:required="${column.required} ? 'required' : null"
+                                                            th:checked="(${#maps.containsKey(formData, column.id)} ? true : false) ? (${#lists.contains(formData.get(column.id), option.id)} ? 'checked')">
+                                                        <label class="form-check-label" th:for="|id${option.id}|"
+                                                            th:text="${option.name}">
+                                                            Default checkbox
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </th:block>
+                                        </th:block>
+                                    </div>
+                                </th:block>
+                            </div>
+                        </div>
+                        <div class="c-form-button">
+                            <button type="submit" class="c-form-button__submit btn btn-warning"
+                                th:text="#{form.submit}">Submit</button>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+        <th:block th:replace="form/share :: loading"></th:block>
+    </main>
+    <th:block th:replace="form/share :: status"></th:block>
+    <th:block th:replace="share/body :: footer"></th:block>
+    <script src="/js/script.min.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html th:lang="${#locale}">
+
+<head>
+    <th:block th:replace="share/head :: meta"></th:block>
+    <title th:utext="#{index.head.label}">登記入學</title>
+    <th:block th:replace="share/head :: css"></th:block>
+    <th:block th:replace="share/head :: icon"></th:block>
+    <th:block th:replace="admin/share :: style"></th:block>
+</head>
+
+<body>
+    <main>
+        <th:block th:replace="admin/share :: symbol_list"></th:block>
+        <th:block th:replace="admin/share :: sidebar"></th:block>
+        <div id="logContainer" class="container-fluid my-3" style="overflow: auto;">
+            <th:block th:each="log : ${logList}">
+                <p style="font-size:10px" th:text="${log}"></p>
+            </th:block>
+        </div>
+    </main>
+    <script>
+        var container = document.getElementById("logContainer");
+        container.scrollTop = container.scrollHeight;
+    </script>
+</body>
+
+</html>

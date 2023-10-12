@@ -1,0 +1,30 @@
+<head>
+    <!-- Meta implement to all templates -->
+    <div th:fragment="meta" th:remove="tag">
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=1, minimum-scale=1.0, maximum-scale=3.0">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta name="keywords" th:content="#{share.head.meta.keywords}" />
+        <meta name="description" th:content="#{share.head.meta.description}" />
+    </div>
+
+
+    <!-- Stylesheet (css) implement to all templates -->
+    <div th:fragment="css" th:remove="tag">
+
+        <link rel="stylesheet" href="/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="/css/style.css">
+        <link rel="stylesheet" href="/css/update.css">
+
+    </div>
+
+
+    <!-- Icon implement to all templates -->
+    <div th:fragment="icon" th:remove="tag">
+        <link rel="icon" href="/img/logo.png" type="image/x-icon">
+        <link rel="shortcut icon" href="/img/logo.png" type="image/x-icon" />
+        <link rel="bookmark" href="/img/logo.png" type="image/x-icon" />
+    </div>
+</head>

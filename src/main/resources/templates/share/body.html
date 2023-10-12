@@ -1,0 +1,62 @@
+<body>
+    <th:block th:fragment="nav">
+        <nav class="navbar sticky-top navbar-expand-lg navbar-dark" style="background-color: rgba(210,121,21, 0.7);">
+            <div class="container-lg">
+                <a class="navbar-brand" href="/"><img src="/img/logo.png" alt="" width="24" height="24"
+                        class="d-inline-block align-text-top me-1" th:text="#{share.nav.title.label}"></a>
+                <ul class="navbar-nav ms-auto mb-lg-0 text-end">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/form/search"
+                            th:text="#{share.nav.block.searchstudent.label}">查詢報名資料</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active"
+                            th:with="urlBuilder=${T(org.springframework.web.servlet.support.ServletUriComponentsBuilder).fromCurrentRequest()}, lang = #{share.switchlang.href}"
+                            th:href="@{${urlBuilder.replaceQueryParam('lang', lang).toUriString()}}"
+                            th:text="#{share.nav.block.switchlang.label}">English</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </th:block>
+    <th:block th:fragment="footer">
+        <footer class="bg-light text-center">
+            <div class="container p-4">
+                <div class="row">
+                    <div class="col-lg-6 col-md-12 mb-4 mb-md-0">
+                        <h5 class="text-capitalize c-txt-size_l2" th:text="#{share.footer.aboutus.title}">About Us</h5>
+
+                        <ul class="text-capitalize list-unstyled mb-0">
+                            <li>
+                                <a href="http://www.yuteh.ntpc.edu.tw" th:text="#{share.footer.aboutus.official}"
+                                    target="_blank" class="mt-1">Official Website</a>
+                            </li>
+                            <li>
+                                <a href="http://www.happytot.com.tw/" th:text="#{share.footer.aboutus.official.kindergarten}"
+                                   target="_blank" class="mt-1">Official Website</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-6 col-md-12 mb-4 mb-md-0">
+                        <h5 class="text-capitalize c-txt-size_l2" th:text="#{share.footer.content.title}">About This Website</h5>
+                        <p th:text="#{share.footer.content.developer}" class="mb-0">
+                            Developer: 91b041@yuteh.ntpc.edu.tw
+                            
+                        </p>
+                        <p th:text="#{share.footer.content.context}">
+                            Design based on Bootstrap
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+                © 2022 Copyright 
+                <a class="text-dark" href="https://register.yuteh.ntpc.edu.tw">Yuteh International School</a>
+            </div>
+        </footer>
+    </th:block>
+
+    <th:block th:fragment="js">
+        <script src="/js/script.min.js"></script>
+    </th:block>
+</body>

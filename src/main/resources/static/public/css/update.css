@@ -1,0 +1,13 @@
+.c-index-background-image_img {
+    background: url(/img/school_image.jfif);
+    background-size: cover;
+}
+
+.c-index-background-image_cover {
+    background-color: white;
+    opacity: .85;
+}
+
+.c-index-form {
+    border: 3px solid rgb(210 121 21 / 50%);
+}

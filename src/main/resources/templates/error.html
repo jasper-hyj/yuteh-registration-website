@@ -1,0 +1,67 @@
+<!-- The default template for all web page-->
+<!DOCTYPE html>
+<html th:lang="${#locale}">
+
+<head>
+    <th:block th:replace="share/head :: meta"></th:block>
+    <title th:utext="|Error ${status}|">Error</title>
+    <th:block th:replace="share/head :: css"></th:block>
+    <th:block th:replace="share/head :: icon"></th:block>
+</head>
+
+<body>
+<script th:if="${status} == 403">window.location="/logout"</script>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="error-template">
+                    <h1 class="c-txt-size_l5" th:utext="#{error.title.label}">Oops!</h1>
+                    <div class="c-txt-size_l2 error-details" th:utext="|#{error.content.label} ${status}|">
+                        Sorry, an error has occured!
+                    </div>
+                    <div class="error-actions c-txt-size_l2">
+                        <a href="/" class="btn btn-warning btn-lg">
+                            <span class="glyphicon glyphicon-home">
+                            </span>
+                            <span th:utext="#{error.link.label}"></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <style>
+        .container {
+            padding-right: 15px;
+            padding-left: 15px;
+            margin-right: auto;
+            margin-left: auto;
+        }
+
+        .row {
+            margin-right: -15px;
+            margin-left: -15px;
+        }
+
+        @media (min-width: 1200px) {
+            .container {
+                max-width: 1170px;
+            }
+        }
+
+        .error-template {
+            padding: 40px 15px;
+            text-align: center;
+        }
+
+        .error-actions {
+            margin-top: 15px;
+            margin-bottom: 15px;
+        }
+
+        .error-actions .btn {
+            margin-right: 10px;
+        }
+    </style>
+</body>
+</html>

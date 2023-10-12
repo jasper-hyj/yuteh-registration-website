@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html th:lang="${#locale}">
+
+<head>
+    <th:block th:replace="share/head :: meta"></th:block>
+    <title th:utext="#{index.head.label}">登記入學</title>
+    <th:block th:replace="share/head :: css"></th:block>
+    <th:block th:replace="share/head :: icon"></th:block>
+    <th:block th:replace="admin/share :: style"></th:block>
+</head>
+
+<body>
+    <main>
+        <th:block th:replace="admin/share :: symbol_list"></th:block>
+        <th:block th:replace="admin/share :: sidebar"></th:block>
+        <div class="container-fluid my-3" style="overflow: auto;">
+            <form id="searchForm">
+                <fieldset style="margin: auto;" class="row row-cols-lg-auto g-3 align-items-center" id="searchFieldset">
+                    <div class="col-6">
+                        <div class="input-group">
+                            <label class="input-group-text" for="form_select">表單選擇</label>
+                            <select class="form-select" id="form_select" name="formId" onchange="getExcel()">
+                                <th:block th:each="form : ${formList}">
+                                    <option th:value="${form.id}" th:text="${form.name}">One</option>
+                                </th:block>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="input-group">
+                            <input placeholder="關鍵字" type="text" name="keyword" class="form-control" autofocus>
+                        </div>
+                    </div>
+                    <div class="col-1">
+                        <button id="searchButton" type="submit" class="btn btn-warning">搜尋</a>
+                    </div>
+                    <div class="col-1">
+                        <div class="input-group">
+                            <a id="excel_link" th:href="@{/admin/excel/download(id=${formList[0].id})}" class="btn btn-warning">下載</a>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+            <div class="container-fluid my-3" style="overflow: auto;">
+                <h3 id="resultCount"></h3>
+                <table class="table">
+                    <thead>
+                        <th scope="col">填單時間</th>
+                        <th scope="col">身份證字號</th>
+                        <th scope="col">出生年月日</th>
+                        <th scope="col">學生姓名</th>
+                        <th scope="col">註記</th>
+                        <th scope="col">詳細資料</th>
+                    </thead>
+                    <tbody id="searchResultTable">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <script src="/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/principle.js"></script>
+</body>
+
+</html>
